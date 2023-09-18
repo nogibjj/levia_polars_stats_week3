@@ -1,7 +1,6 @@
-import polars as pl
+import polar as pl
 import matplotlib.pyplot as plt
 import os
-from polars.errors import EmptyDataFrame, PolarsError
 
 # Function to calculate statistics for specific columns
 def calculate_statistics(file_path):
@@ -11,10 +10,7 @@ def calculate_statistics(file_path):
 
         # Selecting specific columns of interest
         selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
-        data = data.select(selected_columns)
-
-        if data.is_empty():
-            raise EmptyDataFrame("The DataFrame is empty")
+        data = data[selected_columns]
 
         # Calculating mean, median
         mean = data.mean()
@@ -24,23 +20,16 @@ def calculate_statistics(file_path):
         median = median.round(1)
 
         return {'mean': mean, 'median': median}
-    except EmptyDataFrame as e:
-        return str(e)
-    except PolarsError as e:
+    except pl.errors.EmptyDataError as e:
         return str(e)
 
 # Function to visualize specific columns as histograms
 def visualize_data(file_path, save_path=None):
     try:
-        # Reading the dataset from the CSV file
+        # Check if the input is a DataFrame
         data = pl.read_csv(file_path)
-
-        # Selecting specific columns of interest
-        selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
-        data = data.select(selected_columns)
-
-        if data.is_empty():
-            raise EmptyDataFrame("The DataFrame is empty")
+        if not isinstance(data, pl.DataFrame):
+            raise ValueError("Input is not a Polar DataFrame")
 
         # Create a directory to store the plots if save_path is provided
         if save_path:
@@ -50,7 +39,7 @@ def visualize_data(file_path, save_path=None):
         histogram_paths = []
         for col in data.columns:
             plt.figure(figsize=(8, 6))
-            plt.hist(data[col].to_list(), bins=20, edgecolor='k', alpha=0.7)
+            plt.hist(data[col], bins=20, edgecolor='k', alpha=0.7)
             plt.xlabel(col)
             plt.ylabel("Frequency")
             plt.title(f"Histogram of {col}")
@@ -66,9 +55,7 @@ def visualize_data(file_path, save_path=None):
 
         if save_path:
             return histogram_paths
-    except EmptyDataFrame as e:
-        return str(e)
-    except PolarsError as e:
+    except ValueError as e:
         return str(e)
 
 # Function to calculate the correlation of artist_popularity with other columns
@@ -79,10 +66,7 @@ def calculate_correlation(file_path):
 
         # Selecting specific columns of interest
         selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
-        data = data.select(selected_columns)
-
-        if data.is_empty():
-            raise EmptyDataFrame("The DataFrame is empty")
+        data = data[selected_columns]
 
         # Calculating the correlation matrix
         correlation_matrix = data.corr()
@@ -91,7 +75,22 @@ def calculate_correlation(file_path):
         artist_popularity_correlation = correlation_matrix['artist_popularity']
 
         return artist_popularity_correlation
-    except EmptyDataFrame as e:
+    except pl.errors.EmptyDataError as e:
         return str(e)
-    except PolarsError as e:
-        return str(e)
+
+if __name__ == "__main__":
+    dataset_path = "playlist.csv"
+
+    # Calculate statistics for specific columns
+    statistics_result = calculate_statistics(dataset_path)
+    print("Descriptive Statistics:")
+    print(statistics_result)
+
+    # Visualize specific columns as histograms
+    # To save the plots as images in a 'plots' directory
+    visualize_data(dataset_path, save_path='plots')
+
+    # Calculate and print the correlation of artist_popularity with other columns
+    correlation_result = calculate_correlation(dataset_path)
+    print("\nCorrelation of artist_popularity with other columns:")
+    print(correlation_result)
