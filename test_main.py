@@ -1,6 +1,6 @@
 import pytest
 import main
-import polar as pl
+import polars as pl
 
 # Define test cases for calculate_statistics function
 def test_calculate_statistics():
