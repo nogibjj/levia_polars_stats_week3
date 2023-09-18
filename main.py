@@ -28,8 +28,8 @@ def visualize_data(file_path, save_path=None):
     # try:
         # Check if the input is a DataFrame
         data = pl.read_csv(file_path)
-        if not isinstance(data, pl.DataFrame):
-            raise ValueError("Input is not a Polar DataFrame")
+        # if not isinstance(data, pl.DataFrame):
+        #     raise ValueError("Input is not a Polar DataFrame")
 
         # Create a directory to store the plots if save_path is provided
         if save_path:
