@@ -13,12 +13,8 @@ def calculate_statistics(file_path):
         data = data[selected_columns]
 
         # Calculating mean, median
-        mean = data.mean()
-        median = data.median()
-
-        # mean = mean.round(1)
-        # median = median.round(1)
-        # rounded_data = data.apply(lambda col: col.round(2))
+        mean = data.mean().apply(lambda col: col.round(1))
+        median = data.median().apply(lambda col: col.round(1))
 
         return {'mean': mean, 'median': median}
     except pl.ColumnNotFoundError as e:
