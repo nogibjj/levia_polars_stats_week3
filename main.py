@@ -60,7 +60,7 @@ def visualize_data(file_path, save_path=None):
 
 # Function to calculate the correlation of artist_popularity with other columns
 def calculate_correlation(file_path):
-    # try:
+    try:
         # Reading the dataset from the CSV file
         data = pl.read_csv(file_path)
 
