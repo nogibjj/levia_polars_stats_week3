@@ -1,30 +1,62 @@
-# Python_Template
+# Statistics Using Python
 
 Welcome to my project! This repository contains all the code and resources related to my awesome project.
 
 ## Table of Contents
 
-- MakeFile
-- .devcontainer
-- requirements.txt
-- cicd.yml
+- statistics.py
+- Data Visualization (Images)
+- Statistics Summarization
+- Data Description
 
-## MakeFile
+## statistics.py
 
-The `MakeFile` in this repository is a configuration file used with the `make` command. It defines a set of rules and instructions for building and managing the project. It can be used to automate common tasks such as compiling code, running tests, and more. Be sure to consult the MakeFile for specific commands and targets available for this project.
+Python script using Pandas for descriptive statistics.
 
-## .devcontainer
+In this script, it includes the following functions:
 
-The `.devcontainer` directory contains configuration files for setting up a development container environment. This is particularly useful for ensuring that your project can be developed consistently across different platforms and development environments. It may include configuration for Docker containers, development extensions, and other development environment settings. Consult the files in this directory for more details on the development environment setup.
+## Data Visualization
+For more pictures, please see "plots" folder!
+![image](https://github.com/nogibjj/hy218_statistics_scipt_week2/blob/main/plots/energy_histogram.png?raw=true)
 
-## requirements.txt
+## Statistics Summarization
+The following are the result of the statistics
+For danceability, the result means hit songs are more likely to have the ability to make people dance, the median result is also 0.7 which means the deviation is small.
+For energy, we can get the same result as danceability.
+Artist_popularity is the ranking of songs, the median result is bigger than the mean result which means popular songs above the mean value are less than other songs.
+The median result of loudness is smaller than the mean result, meaning loud songs above the mean value are more than other songs.
 
-The `requirements.txt` file lists all the dependencies and packages required to run this project. You can use this file with package management tools like `pip` (for Python) or other package managers to install the necessary libraries and dependencies. It's a good practice to keep this file up-to-date as your project evolves, making it easier for others to set up and run your project with the correct dependencies.
 
-## cicd.yml
-The cicd.yml file is a configuration file for Continuous Integration/Continuous Deployment (CI/CD) pipelines. It defines the steps and actions that need to be taken when code changes are pushed to the repository. CI/CD pipelines automate the build, test, and deployment processes, ensuring code quality and reliability.
+'mean': 
 
-## License
+danceability          0.7
+energy                0.7
+artist_popularity    72.9
+loudness             -5.8
+dtype: float64
 
-MIT
 
+
+'median': 
+
+danceability          0.7
+energy                0.7
+artist_popularity    74.0
+loudness             -5.5
+dtype: float64
+
+## Data Description
+
+Source
+The data is extracted through Spotify API directly. For a comprehensive overview of the data extraction process, you can check out the notebook here.
+
+Content
+The dataset includes information on songs/tracks (100 per year) from Top Hit playlists from 2010 to 2022 created by Spotify.
+
+2300 attributes
+23 variables
+2 playlist related (playlist_url, year)
+3 track related (track_id, track_name, track_popularity)
+13 track's audio features (danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms, time_signature)
+1 album related (album)
+4 artist related (artist_id, artist_name, artist_genre, artist_popularity)

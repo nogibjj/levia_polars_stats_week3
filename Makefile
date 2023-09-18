@@ -10,7 +10,7 @@ format:
 
 test:
 	python -m pytest -vv --cov=main test_*.py
-deploy: 
+deploy:
 
 		
 all: install lint format test 
