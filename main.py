@@ -20,9 +20,9 @@ def calculate_statistics(file_path):
         median = median.round(1)
 
         return {'mean': mean, 'median': median}
-    except pl.PolarsError as e:
+    except pl.ColumnNotFoundError as e:
     # Handle the exception, e.g., print an error message
-        print(f"An error occurred: {e}")
+        print(f"ColumnNotFoundError: {e}")
 
 # Function to visualize specific columns as histograms
 def visualize_data(file_path, save_path=None):
@@ -76,9 +76,9 @@ def calculate_correlation(file_path):
         artist_popularity_correlation = correlation_matrix['artist_popularity']
 
         return artist_popularity_correlation
-    except pl.PolarsError as e:
+    except pl.ColumnNotFoundError as e:
     # Handle the exception, e.g., print an error message
-        print(f"An error occurred: {e}")
+        print(f"ColumnNotFoundError: {e}")
 
 if __name__ == "__main__":
     dataset_path = "playlist.csv"
