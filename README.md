@@ -24,7 +24,7 @@ For energy, we can get the slightly opposite result as danceability.
 Artist_popularity is the ranking of songs, the median result is bigger than the mean result which means popular songs above the mean value are less than other songs.
 The median result of loudness is smaller than the mean result, meaning loud songs above the mean value are more than other songs.
 
-![image](https://github.com/nogibjj/hy218_statistics_scipt_week2/blob/main/plots/Descriptive_Result.png?raw=true)
+![image](https://github.com/nogibjj/levia_polars_stats_week3/blob/main/plots/Descriptive_Result.png?raw=true)
 
 
 ## Data Description
