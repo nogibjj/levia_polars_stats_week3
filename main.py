@@ -1,6 +1,7 @@
 import polars as pl
 import matplotlib.pyplot as plt
 import os
+from polars.errors import EmptyDataFrame, PolarsError
 
 # Function to calculate statistics for specific columns
 def calculate_statistics(file_path):
@@ -12,6 +13,9 @@ def calculate_statistics(file_path):
         selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
         data = data.select(selected_columns)
 
+        if data.is_empty():
+            raise EmptyDataFrame("The DataFrame is empty")
+
         # Calculating mean, median
         mean = data.mean()
         median = data.median()
@@ -20,16 +24,23 @@ def calculate_statistics(file_path):
         median = median.round(1)
 
         return {'mean': mean, 'median': median}
-    except Exception as e:
+    except EmptyDataFrame as e:
+        return str(e)
+    except PolarsError as e:
         return str(e)
 
 # Function to visualize specific columns as histograms
 def visualize_data(file_path, save_path=None):
     try:
-        # Check if the input is a DataFrame
+        # Reading the dataset from the CSV file
         data = pl.read_csv(file_path)
-        if not isinstance(data, pl.DataFrame):
-            raise ValueError("Input is not a Polars DataFrame")
+
+        # Selecting specific columns of interest
+        selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
+        data = data.select(selected_columns)
+
+        if data.is_empty():
+            raise EmptyDataFrame("The DataFrame is empty")
 
         # Create a directory to store the plots if save_path is provided
         if save_path:
@@ -55,7 +66,9 @@ def visualize_data(file_path, save_path=None):
 
         if save_path:
             return histogram_paths
-    except Exception as e:
+    except EmptyDataFrame as e:
+        return str(e)
+    except PolarsError as e:
         return str(e)
 
 # Function to calculate the correlation of artist_popularity with other columns
@@ -68,6 +81,9 @@ def calculate_correlation(file_path):
         selected_columns = ['danceability', 'energy', 'artist_popularity', 'loudness']
         data = data.select(selected_columns)
 
+        if data.is_empty():
+            raise EmptyDataFrame("The DataFrame is empty")
+
         # Calculating the correlation matrix
         correlation_matrix = data.corr()
 
@@ -75,8 +91,11 @@ def calculate_correlation(file_path):
         artist_popularity_correlation = correlation_matrix['artist_popularity']
 
         return artist_popularity_correlation
-    except Exception as e:
+    except EmptyDataFrame as e:
         return str(e)
+    except PolarsError as e:
+        return str(e)
+
 
 if __name__ == "__main__":
     dataset_path = "playlist.csv"
