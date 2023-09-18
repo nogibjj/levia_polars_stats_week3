@@ -20,16 +20,16 @@ def calculate_statistics(file_path):
         median = median.round(1)
 
         return {'mean': mean, 'median': median}
-    except pl.errors.EmptyDataError as e:
-        return str(e)
+    except pl.DataFrame.Empty:
+        return "Empty DataFrame: No data to calculate statistics."
 
 # Function to visualize specific columns as histograms
 def visualize_data(file_path, save_path=None):
     try:
         # Check if the input is a DataFrame
         data = pl.read_csv(file_path)
-        # if not isinstance(data, pl.DataFrame):
-        #     raise ValueError("Input is not a Polar DataFrame")
+        if not isinstance(data, pl.DataFrame):
+            raise ValueError("Input is not a Polar DataFrame")
 
         # Create a directory to store the plots if save_path is provided
         if save_path:
@@ -75,8 +75,8 @@ def calculate_correlation(file_path):
         artist_popularity_correlation = correlation_matrix['artist_popularity']
 
         return artist_popularity_correlation
-    except pl.errors.EmptyDataError as e:
-        return str(e)
+    except pl.DataFrame.Empty:
+        return "Empty DataFrame: No data to calculate correlation."
 
 if __name__ == "__main__":
     dataset_path = "playlist.csv"
