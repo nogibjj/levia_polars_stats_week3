@@ -11,9 +11,7 @@ Welcome to my project! This repository contains all the code and resources relat
 
 ## statistics.py
 
-Python script using Pandas for descriptive statistics.
-
-In this script, it includes the following functions:
+Python script using Polars for descriptive statistics.
 
 ## Data Visualization
 For more pictures, please see "plots" folder!
